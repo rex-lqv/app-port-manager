@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Port Manager</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- TITLEBAR -->
+<div class="titlebar">
+  <h1>Port Manager</h1>
+  <span class="badge" id="count-badge">0</span>
+  <div class="spacer"></div>
+  <button class="btn" id="refresh-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg>
+    Refresh
+  </button>
+</div>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-label">Views</div>
+    <button class="sidebar-item active" data-view="all">
+      <span class="dot active"></span>
+      All Ports
+    </button>
+    <button class="sidebar-item" data-view="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      Port Lookup
+    </button>
+
+    <div class="sidebar-label" style="margin-top:8px;">Common Ports</div>
+    <button class="sidebar-item" data-quickport="3000">:3000 — Node/React</button>
+    <button class="sidebar-item" data-quickport="8080">:8080 — HTTP Alt</button>
+    <button class="sidebar-item" data-quickport="5432">:5432 — Postgres</button>
+    <button class="sidebar-item" data-quickport="3306">:3306 — MySQL</button>
+    <button class="sidebar-item" data-quickport="6379">:6379 — Redis</button>
+    <button class="sidebar-item" data-quickport="5000">:5000 — Flask</button>
+    <button class="sidebar-item" data-quickport="4000">:4000 — GraphQL</button>
+    <button class="sidebar-item" data-quickport="8000">:8000 — Django</button>
+
+    <div class="sidebar-bottom">
+      <button class="sidebar-item" id="donate-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
+        Donate / Sponsor
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- TOOLBAR -->
+    <div class="toolbar">
+      <div class="search-wrap">
+        <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" id="search-input" placeholder="Filter by port, process, PID…" />
+      </div>
+      <button class="btn" id="auto-refresh-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span id="auto-refresh-label">Auto Refresh: Off</span>
+      </button>
+    </div>
+
+    <!-- PORT LIST -->
+    <div class="port-list">
+      <div class="table-header">
+        <span>PORT</span>
+        <span>PROCESS</span>
+        <span>PID</span>
+        <span>PROTO</span>
+        <span>ACTION</span>
+      </div>
+      <div id="port-list-body"></div>
+    </div>
+
+    <!-- STATUS BAR -->
+    <div class="statusbar">
+      <div class="status-dot" id="status-dot"></div>
+      <span id="status-text">Ready</span>
+      <div class="spacer"></div>
+      <span>Open source · Free forever</span>
+      <span>·</span>
+      <a class="donate-link" id="donate-link">❤ Sponsor</a>
+    </div>
+  </main>
+</div>
+
+<!-- KILL CONFIRM MODAL -->
+<div class="modal-overlay hidden" id="kill-modal">
+  <div class="modal">
+    <h2>Kill Process?</h2>
+    <p id="kill-modal-text">Are you sure?</p>
+    <div class="actions">
+      <button class="btn" id="kill-cancel-btn">Cancel</button>
+      <button class="btn danger" id="kill-confirm-btn">Kill</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toast-container"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+{
+  "name": "port-manager",
+  "version": "1.0.0",
+  "description": "macOS GUI for managing ports — see what's running, kill instantly",
+  "main": "src/main.js",
+  "author": "rex-lqv",
+  "license": "MIT",
+  "scripts": {
+    "dev": "electron .",
+    "build": "electron-builder --mac --publish never",
+    "build:dmg": "electron-builder --mac dmg --publish never"
+  },
+  "build": {
+    "appId": "com.rex-lqv.portmanager",
+    "productName": "Port Manager",
+    "copyright": "Copyright © 2026 rex-lqv",
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "icon": "assets/icon.icns",
+      "target": [
+        { "target": "dmg", "arch": ["arm64", "x64"] },
+        { "target": "zip", "arch": ["arm64", "x64"] }
+      ]
+    },
+    "dmg": {
+      "title": "Port Manager",
+      "backgroundColor": "#0f1117"
+    },
+    "files": ["src/**/*"]
+  },
+  "devDependencies": {
+    "electron": "^41.0.0",
+    "electron-builder": "^26.8.1"
+  }
+}
